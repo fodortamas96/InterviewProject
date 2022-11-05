@@ -21,7 +21,7 @@ namespace InterviewProject
         public int Height { get => height; set => height = value; }
         public char ObstacleChar { get => obstacleChar; set => obstacleChar = value; }
 
-        public Obstacle(int left, int top, int width, int height, char obstacleChar)
+        public Obstacle(int left, int top, int width, int height)
         {
             this.left = left;
             this.top = top;
