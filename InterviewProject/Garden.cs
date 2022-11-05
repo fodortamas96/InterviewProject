@@ -17,13 +17,14 @@ namespace InterviewProject
         const int MAXOBSTACLESIZE = 10;
 
         char[,] garden;
+        List<Obstacle> obstacles = new List<Obstacle>();
 
         public Garden()
         {
             this.garden = new char[WIDTHOFGARDEN, HEIGHTOFGARDEN];
         }
 
-        List<Obstacle> obstacles = new List<Obstacle>();
+        public List<Obstacle> Obstacles { get => obstacles; set => obstacles = value; }
 
         public void CreateObstacles()
         {
@@ -33,11 +34,22 @@ namespace InterviewProject
             {
                 int width = rnd.Next(MINOBSTACLESIZE, MAXOBSTACLESIZE);
                 int height = rnd.Next(MINOBSTACLESIZE, MAXOBSTACLESIZE);
-                int x = rnd.Next(0, this.garden.GetLength(1) - height - 1);
-                int y = rnd.Next(0, this.garden.GetLength(0) - width - 1);
+                int x = rnd.Next(0, this.garden.GetLength(0) - width - 1);
+                int y = rnd.Next(0, this.garden.GetLength(1) - height - 1);
 
                 Obstacle obstacle = new Obstacle(x, y, height, width);
-                obstacles.Add(obstacle);
+                Obstacles.Add(obstacle);
+            }
+        }
+
+        public void FillObstacle(Obstacle obstacle)
+        {
+            for (int i = obstacle.Top; i < obstacle.Top + obstacle.Height; i++)
+            {
+                for (int j = obstacle.Left; j < obstacle.Left + obstacle.Width; j++)
+                {
+                    garden[i, j] = obstacle.ObstacleChar;
+                }
             }
         }
     }
