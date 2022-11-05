@@ -52,5 +52,17 @@ namespace InterviewProject
                 }
             }
         }
+
+        public void ShowGarden()
+        {
+            for (int i = 0; i < garden.GetLength(0); i++)
+            {
+                for (int j = 0; j < garden.GetLength(1); j++)
+                {
+                    Console.Write(garden[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
     }
 }
