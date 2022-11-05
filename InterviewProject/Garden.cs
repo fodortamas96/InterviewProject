@@ -8,8 +8,8 @@ namespace InterviewProject
 {
     internal class Garden
     {
-        const int WIDTHOFGARDEN = 50;
-        const int HEIGHTOFGARDEN = 50;
+        const int WIDTHOFGARDEN = 30;
+        const int HEIGHTOFGARDEN = 30;
 
         const int MINOBSTACLES = 2;
         const int MAXOBSTACLES = 5;
@@ -18,6 +18,7 @@ namespace InterviewProject
 
         char[,] garden;
         List<Obstacle> obstacles = new List<Obstacle>();
+        LawnMower lawnMower;
 
         public Garden()
         {
@@ -25,6 +26,7 @@ namespace InterviewProject
         }
 
         public List<Obstacle> Obstacles { get => obstacles; set => obstacles = value; }
+        internal LawnMower LawnMower { get => lawnMower; set => lawnMower = value; }
 
         public void CreateObstacles()
         {
@@ -62,6 +64,20 @@ namespace InterviewProject
                     garden[i, j] = obstacle.ObstacleChar;
                 }
             }
+        }
+
+        public void PutDownLawnMower()
+        {
+            Random rnd = new Random();
+            int x;
+            int y;
+            do
+            {
+                x = rnd.Next(0, WIDTHOFGARDEN);
+                y = rnd.Next(0, HEIGHTOFGARDEN);
+            } while (IsItObstacle(x, y));
+            lawnMower = new LawnMower(x, y);
+            garden[x, y] = lawnMower.LawnMowerChar;
         }
 
         public void ShowGarden()
