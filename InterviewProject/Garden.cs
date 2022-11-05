@@ -42,6 +42,17 @@ namespace InterviewProject
             }
         }
 
+        public void FillGrass()
+        {
+            for (int i = 0; i < garden.GetLength(0); i++)
+            {
+                for (int j = 0; j < garden.GetLength(1); j++)
+                {
+                    garden[i, j] = '|';
+                }
+            }
+        }
+
         public void FillObstacle(Obstacle obstacle)
         {
             for (int i = obstacle.Top; i < obstacle.Top + obstacle.Height; i++)
