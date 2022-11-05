@@ -75,5 +75,17 @@ namespace InterviewProject
                 Console.WriteLine();
             }
         }
+
+        public bool IsItObstacle(int x, int y)
+        {
+            if (garden[x, y] == obstacles[0].ObstacleChar)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
