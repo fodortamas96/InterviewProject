@@ -8,6 +8,9 @@ namespace InterviewProject
 {
     internal class Garden
     {
+        const int WIDTHOFGARDEN = 50;
+        const int HEIGHTOFGARDEN = 50;
+
         const int MINOBSTACLES = 2;
         const int MAXOBSTACLES = 5;
         const int MINOBSTACLESIZE = 5;
@@ -17,7 +20,7 @@ namespace InterviewProject
 
         public Garden()
         {
-            this.garden = new char[50, 50];
+            this.garden = new char[WIDTHOFGARDEN, HEIGHTOFGARDEN];
         }
 
         List<Obstacle> obstacles = new List<Obstacle>();
