@@ -104,5 +104,30 @@ namespace InterviewProject
                 return false;
             }
         }
+
+        public int[] WhereIsTheClosestGrass()
+        {
+            int minX = 0;
+            int minY = 0;
+            for (int i = 0; i < GardenMap.GetLength(0); i++)
+            {
+                for (int j = 0; j < GardenMap.GetLength(1); j++)
+                {
+                    if (GardenMap[i, j] == 'X' || GardenMap[i, j] == 'M' || GardenMap[i, j] == '.')
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (lawnMower.PositionX - i < lawnMower.PositionX - minX || lawnMower.PositionY - j < lawnMower.PositionY - minY)
+                        {
+                            minX = i;
+                            minY = j;
+                        }
+                    }
+                }
+            }
+            return new int[] { minX, minY };
+        }
     }
 }
