@@ -129,5 +129,29 @@ namespace InterviewProject
             }
             return new int[] { minX, minY };
         }
+
+        public void MoveAndCut()
+        {
+            int[] closestGrass = WhereIsTheClosestGrass();
+            while (!(closestGrass[0] == lawnMower.PositionX && closestGrass[1] == lawnMower.PositionY))
+            {
+                if (closestGrass[0] < lawnMower.PositionX)
+                {
+                    lawnMower.PositionX--;
+                }
+                else if (closestGrass[0] > lawnMower.PositionY)
+                {
+                    lawnMower.PositionX++;
+                }
+                else if (closestGrass[1] < lawnMower.PositionY)
+                {
+                    lawnMower.PositionY--;
+                }
+                else
+                {
+                    lawnMower.PositionY++;
+                }
+            }
+        }
     }
 }
