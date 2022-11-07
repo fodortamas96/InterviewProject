@@ -16,17 +16,18 @@ namespace InterviewProject
         const int MINOBSTACLESIZE = 5;
         const int MAXOBSTACLESIZE = 10;
 
-        char[,] garden;
+        char[,] gardenMap;
         List<Obstacle> obstacles = new List<Obstacle>();
         LawnMower lawnMower;
 
         public Garden()
         {
-            this.garden = new char[WIDTHOFGARDEN, HEIGHTOFGARDEN];
+            this.GardenMap = new char[WIDTHOFGARDEN, HEIGHTOFGARDEN];
         }
 
         public List<Obstacle> Obstacles { get => obstacles; set => obstacles = value; }
         internal LawnMower LawnMower { get => lawnMower; set => lawnMower = value; }
+        public char[,] GardenMap { get => gardenMap; set => gardenMap = value; }
 
         public void CreateObstacles()
         {
@@ -36,8 +37,8 @@ namespace InterviewProject
             {
                 int width = rnd.Next(MINOBSTACLESIZE, MAXOBSTACLESIZE);
                 int height = rnd.Next(MINOBSTACLESIZE, MAXOBSTACLESIZE);
-                int x = rnd.Next(0, this.garden.GetLength(0) - width - 1);
-                int y = rnd.Next(0, this.garden.GetLength(1) - height - 1);
+                int x = rnd.Next(0, this.GardenMap.GetLength(0) - width - 1);
+                int y = rnd.Next(0, this.GardenMap.GetLength(1) - height - 1);
 
                 Obstacle obstacle = new Obstacle(x, y, height, width);
                 Obstacles.Add(obstacle);
@@ -46,11 +47,11 @@ namespace InterviewProject
 
         public void FillGrass()
         {
-            for (int i = 0; i < garden.GetLength(0); i++)
+            for (int i = 0; i < GardenMap.GetLength(0); i++)
             {
-                for (int j = 0; j < garden.GetLength(1); j++)
+                for (int j = 0; j < GardenMap.GetLength(1); j++)
                 {
-                    garden[i, j] = '|';
+                    GardenMap[i, j] = '|';
                 }
             }
         }
@@ -61,7 +62,7 @@ namespace InterviewProject
             {
                 for (int j = obstacle.Left; j < obstacle.Left + obstacle.Width; j++)
                 {
-                    garden[i, j] = obstacle.ObstacleChar;
+                    GardenMap[i, j] = obstacle.ObstacleChar;
                 }
             }
         }
@@ -77,16 +78,16 @@ namespace InterviewProject
                 y = rnd.Next(0, HEIGHTOFGARDEN);
             } while (IsItObstacle(x, y));
             lawnMower = new LawnMower(x, y);
-            garden[x, y] = lawnMower.LawnMowerChar;
+            GardenMap[x, y] = lawnMower.LawnMowerChar;
         }
 
         public void ShowGarden()
         {
-            for (int i = 0; i < garden.GetLength(0); i++)
+            for (int i = 0; i < GardenMap.GetLength(0); i++)
             {
-                for (int j = 0; j < garden.GetLength(1); j++)
+                for (int j = 0; j < GardenMap.GetLength(1); j++)
                 {
-                    Console.Write(garden[i, j]);
+                    Console.Write(GardenMap[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -94,7 +95,7 @@ namespace InterviewProject
 
         public bool IsItObstacle(int x, int y)
         {
-            if (garden[x, y] == obstacles[0].ObstacleChar)
+            if (GardenMap[x, y] == obstacles[0].ObstacleChar)
             {
                 return true;
             }
