@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace InterviewProject
 {
     internal class Garden
     {
-        const int WIDTHOFGARDEN = 30;
-        const int HEIGHTOFGARDEN = 30;
+        const int WIDTHOFGARDEN = 10;
+        const int HEIGHTOFGARDEN = 10;
 
         const int MINOBSTACLES = 2;
         const int MAXOBSTACLES = 5;
-        const int MINOBSTACLESIZE = 5;
-        const int MAXOBSTACLESIZE = 10;
+        const int MINOBSTACLESIZE = 1;
+        const int MAXOBSTACLESIZE = 5;
 
         char[,] gardenMap;
         List<Obstacle> obstacles = new List<Obstacle>();
@@ -83,6 +84,7 @@ namespace InterviewProject
 
         public void ShowGarden()
         {
+            Console.Clear();
             for (int i = 0; i < GardenMap.GetLength(0); i++)
             {
                 for (int j = 0; j < GardenMap.GetLength(1); j++)
@@ -119,7 +121,7 @@ namespace InterviewProject
                     }
                     else
                     {
-                        if (lawnMower.PositionX - i < lawnMower.PositionX - minX || lawnMower.PositionY - j < lawnMower.PositionY - minY)
+                        if (Math.Abs(lawnMower.PositionX - i) < Math.Abs(lawnMower.PositionX - minX) || Math.Abs(lawnMower.PositionY - j) < Math.Abs(lawnMower.PositionY - minY))
                         {
                             minX = i;
                             minY = j;
@@ -135,23 +137,34 @@ namespace InterviewProject
             int[] closestGrass = WhereIsTheClosestGrass();
             while (!(closestGrass[0] == lawnMower.PositionX && closestGrass[1] == lawnMower.PositionY))
             {
+                int[] lastPosition = new int[] { lawnMower.PositionX, lawnMower.PositionY};
                 if (closestGrass[0] < lawnMower.PositionX)
                 {
                     lawnMower.PositionX--;
+                    gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
+                    ShowGarden();
                 }
-                else if (closestGrass[0] > lawnMower.PositionY)
+                else if (closestGrass[0] > lawnMower.PositionX)
                 {
                     lawnMower.PositionX++;
+                    gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
+                    ShowGarden();
                 }
                 else if (closestGrass[1] < lawnMower.PositionY)
                 {
                     lawnMower.PositionY--;
+                    gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
+                    ShowGarden();
                 }
                 else
                 {
                     lawnMower.PositionY++;
+                    gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
+                    ShowGarden();
                 }
+                gardenMap[lastPosition[0], lastPosition[1]] = '.';
             }
+            Thread.Sleep(50);
         }
     }
 }

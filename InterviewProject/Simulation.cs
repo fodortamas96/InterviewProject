@@ -8,9 +8,10 @@ namespace InterviewProject
 {
     internal class Simulation
     {
+        static Garden garden = new Garden();
+
         static public void Init()
         {
-            Garden garden = new Garden();
             garden.FillGrass();
             garden.CreateObstacles();
             for (int i = 0; i < garden.Obstacles.Count; i++)
@@ -19,6 +20,14 @@ namespace InterviewProject
             }
             garden.PutDownLawnMower();
             garden.ShowGarden();
+        }
+
+        static public void Run()
+        {
+            while (true)
+            {
+                garden.MoveAndCut();
+            }
         }
     }
 }

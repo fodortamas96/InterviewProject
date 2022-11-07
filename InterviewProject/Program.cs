@@ -11,6 +11,7 @@ namespace InterviewProject
         static void Main(string[] args)
         {
             Simulation.Init();
+            Simulation.Run();
 
             Console.ReadLine();
         }
