@@ -10,6 +10,9 @@ namespace InterviewProject
     {
         static void Main(string[] args)
         {
+            Simulation.Init();
+
+            Console.ReadLine();
         }
     }
 }
