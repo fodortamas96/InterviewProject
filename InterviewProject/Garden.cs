@@ -9,13 +9,13 @@ namespace InterviewProject
 {
     internal class Garden
     {
-        const int WIDTHOFGARDEN = 10;
-        const int HEIGHTOFGARDEN = 10;
+        const int WIDTHOFGARDEN = 15;
+        const int HEIGHTOFGARDEN = 15;
 
-        const int MINOBSTACLES = 2;
-        const int MAXOBSTACLES = 5;
-        const int MINOBSTACLESIZE = 1;
-        const int MAXOBSTACLESIZE = 5;
+        const int MINOBSTACLES = 5;
+        const int MAXOBSTACLES = 7;
+        const int MINOBSTACLESIZE = 2;
+        const int MAXOBSTACLESIZE = 3;
 
         char[,] gardenMap;
         List<Obstacle> obstacles = new List<Obstacle>();
@@ -79,12 +79,14 @@ namespace InterviewProject
                 y = rnd.Next(0, HEIGHTOFGARDEN);
             } while (IsItObstacle(x, y));
             lawnMower = new LawnMower(x, y);
+            lawnMower.StartingPosX = x;
+            lawnMower.StartingPosY = y;
             GardenMap[x, y] = lawnMower.LawnMowerChar;
         }
 
         public void ShowGarden()
         {
-            Console.Clear();
+            Console.SetCursorPosition(0, 0);
             for (int i = 0; i < GardenMap.GetLength(0); i++)
             {
                 for (int j = 0; j < GardenMap.GetLength(1); j++)
@@ -93,11 +95,36 @@ namespace InterviewProject
                 }
                 Console.WriteLine();
             }
+            Thread.Sleep(150);
         }
 
         public bool IsItObstacle(int x, int y)
         {
-            if (GardenMap[x, y] == obstacles[0].ObstacleChar)
+            if (!IsItOutOfRange(x, y) && GardenMap[x, y] == 'X')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsItOutOfRange(int x, int y)
+        {
+            if (x == WIDTHOFGARDEN || y == HEIGHTOFGARDEN || x < 0 || y < 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsValidMove(int x, int y)
+        {
+            if (!IsItOutOfRange(x, y) && !IsItObstacle(x, y))
             {
                 return true;
             }
@@ -111,22 +138,28 @@ namespace InterviewProject
         {
             int minX = 0;
             int minY = 0;
+            double distance;
+            double lastDistance = 100d;
             for (int i = 0; i < GardenMap.GetLength(0); i++)
             {
                 for (int j = 0; j < GardenMap.GetLength(1); j++)
                 {
+                    distance = Math.Abs(lawnMower.PositionX - i) + Math.Abs(lawnMower.PositionY - j);
                     if (GardenMap[i, j] == 'X' || GardenMap[i, j] == 'M' || GardenMap[i, j] == '.')
                     {
                         continue;
                     }
                     else
                     {
-                        if (Math.Abs(lawnMower.PositionX - i) < Math.Abs(lawnMower.PositionX - minX) || Math.Abs(lawnMower.PositionY - j) < Math.Abs(lawnMower.PositionY - minY))
+                        
+                        if (distance < lastDistance/*Math.Abs((lawnMower.PositionX - i) + (lawnMower.PositionY - j)) < Math.Abs((lawnMower.PositionX - minX) + (lawnMower.PositionY - minY))*/)
                         {
                             minX = i;
                             minY = j;
+                            lastDistance = distance;
                         }
                     }
+                    
                 }
             }
             return new int[] { minX, minY };
@@ -135,36 +168,36 @@ namespace InterviewProject
         public void MoveAndCut()
         {
             int[] closestGrass = WhereIsTheClosestGrass();
+
             while (!(closestGrass[0] == lawnMower.PositionX && closestGrass[1] == lawnMower.PositionY))
             {
-                int[] lastPosition = new int[] { lawnMower.PositionX, lawnMower.PositionY};
-                if (closestGrass[0] < lawnMower.PositionX)
-                {
-                    lawnMower.PositionX--;
-                    gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
-                    ShowGarden();
-                }
-                else if (closestGrass[0] > lawnMower.PositionX)
+                int[] lastPosition = new int[] { lawnMower.PositionX, lawnMower.PositionY };
+                if (IsValidMove(lawnMower.PositionX + 1, lawnMower.PositionY) && closestGrass[0] > lawnMower.PositionX)
                 {
                     lawnMower.PositionX++;
                     gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
                     ShowGarden();
                 }
-                else if (closestGrass[1] < lawnMower.PositionY)
+                else if(IsValidMove(lawnMower.PositionX, lawnMower.PositionY - 1) && closestGrass[1] < lawnMower.PositionY)
                 {
                     lawnMower.PositionY--;
                     gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
                     ShowGarden();
                 }
-                else
+                else if (IsValidMove(lawnMower.PositionX - 1, lawnMower.PositionY) && closestGrass[0] < lawnMower.PositionX)
+                {
+                    lawnMower.PositionX--;
+                    gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
+                    ShowGarden();
+                }
+                else if (IsValidMove(lawnMower.PositionX, lawnMower.PositionY + 1) && closestGrass[1] > lawnMower.PositionY)
                 {
                     lawnMower.PositionY++;
                     gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
                     ShowGarden();
-                }
+                } 
                 gardenMap[lastPosition[0], lastPosition[1]] = '.';
             }
-            Thread.Sleep(50);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace InterviewProject
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+            Console.SetWindowSize(31, 31);
+
             Simulation.Init();
             Simulation.Run();
 
