@@ -152,7 +152,7 @@ namespace InterviewProject
                     else
                     {
                         
-                        if (distance < lastDistance/*Math.Abs((lawnMower.PositionX - i) + (lawnMower.PositionY - j)) < Math.Abs((lawnMower.PositionX - minX) + (lawnMower.PositionY - minY))*/)
+                        if (distance < lastDistance)
                         {
                             minX = i;
                             minY = j;
@@ -178,7 +178,7 @@ namespace InterviewProject
                     gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
                     ShowGarden();
                 }
-                else if(IsValidMove(lawnMower.PositionX, lawnMower.PositionY - 1) && closestGrass[1] < lawnMower.PositionY)
+                else if (IsValidMove(lawnMower.PositionX, lawnMower.PositionY - 1) && closestGrass[1] < lawnMower.PositionY)
                 {
                     lawnMower.PositionY--;
                     gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
@@ -195,7 +195,8 @@ namespace InterviewProject
                     lawnMower.PositionY++;
                     gardenMap[lawnMower.PositionX, lawnMower.PositionY] = lawnMower.LawnMowerChar;
                     ShowGarden();
-                } 
+                }
+
                 gardenMap[lastPosition[0], lastPosition[1]] = '.';
             }
         }
