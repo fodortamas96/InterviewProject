@@ -8,23 +8,23 @@ namespace InterviewProject
 {
     internal class Obstacle
     {
-        int left;
-        int top;
+        int x;
+        int y;
         int width;
         int height;
 
         char obstacleChar;
 
-        public int Left { get => left; set => left = value; }
-        public int Top { get => top; set => top = value; }
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
         public int Width { get => width; set => width = value; }
         public int Height { get => height; set => height = value; }
         public char ObstacleChar { get => obstacleChar; set => obstacleChar = value; }
 
-        public Obstacle(int left, int top, int width, int height)
+        public Obstacle(int x, int y, int width, int height)
         {
-            this.left = left;
-            this.top = top;
+            this.x = x;
+            this.y = y;
             this.width = width;
             this.height = height;
             this.obstacleChar = 'X';

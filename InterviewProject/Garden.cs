@@ -59,9 +59,9 @@ namespace InterviewProject
 
         public void FillObstacle(Obstacle obstacle)
         {
-            for (int i = obstacle.Top; i < obstacle.Top + obstacle.Height; i++)
+            for (int i = obstacle.Y; i < obstacle.Y + obstacle.Height; i++)
             {
-                for (int j = obstacle.Left; j < obstacle.Left + obstacle.Width; j++)
+                for (int j = obstacle.X; j < obstacle.X + obstacle.Width; j++)
                 {
                     GardenMap[i, j] = obstacle.ObstacleChar;
                 }
